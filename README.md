@@ -1,8 +1,8 @@
 ### RWSplitter
 
 RWSplitter allows you to implement single or multi-tenant read/write splitting using Spring and Hibernate without changes to your
-existing Spring transactions.  Using the provided aspect, `DatabaseRoleInterceptor`, all public, read-only transactions will be routed
-to your configured reader `DataSource`(s) and everything else will be routed to your configured writer `DataSource`(s).
+existing Spring transactions.  Using the provided aspect, `DatabaseRoleInterceptor`, all public, read-only transactions will be
+routed to your configured reader `DataSource`(s) and everything else will be routed to your configured writer `DataSource`(s).
 
 Multi-tenant is achieved in one of two ways:
 * Programmtically by setting the tenant identifier on the current thread using the static method
