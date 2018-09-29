@@ -7,7 +7,7 @@ routed to your configured reader `DataSource`(s) and everything else will be rou
 Multi-tenant is achieved in one of two ways:
 * Programmtically by setting the tenant identifier on the current thread using the static method
 `SpringTenantIdentifierResolver.setCurrentTenant(String tenant)`, or
-* Setting the tenant in your `HttpSession` under the session attribute `tenantIdentifier` (configurable)
+* Setting the tenant in your `HttpSession` under the session attribute `tenantIdentifier` (configurable, see below)
 
 #### Configuration using Spring JavaConfig
 
