@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import javax.sql.DataSource;
@@ -43,11 +44,20 @@ public abstract class SpringMultiTenantConnectionProvider<T extends StoppableCon
 
     private final transient SpringTenantIdentifierResolver tenantIdentifierResolver;
     private final transient Logger logger = LoggerFactory.getLogger(getClass());
-    private final ConcurrentHashMap<String, Boolean> migratedTenants = new ConcurrentHashMap<>();
+    private final Map<String, Boolean> migratedTenants;
     private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     protected SpringMultiTenantConnectionProvider(final SpringTenantIdentifierResolver tenantIdentifierResolver) {
+        this(tenantIdentifierResolver, new ConcurrentHashMap<>());
+    }
+    protected SpringMultiTenantConnectionProvider(final SpringTenantIdentifierResolver tenantIdentifierResolver,
+      final Supplier<Map<String, Boolean>> mapSupplier) {
+        this(tenantIdentifierResolver, mapSupplier.get());
+    }
+    protected SpringMultiTenantConnectionProvider(final SpringTenantIdentifierResolver tenantIdentifierResolver,
+      final Map<String, Boolean> migratedTenants) {
         this.tenantIdentifierResolver = tenantIdentifierResolver;
+        this.migratedTenants = migratedTenants;
     }
 
     /**
