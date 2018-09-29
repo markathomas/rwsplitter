@@ -9,6 +9,12 @@ Multi-tenant is achieved in one of two ways:
 `SpringTenantIdentifierResolver.setCurrentTenant(String tenant)`, or
 * Setting the tenant in your `HttpSession` under the session attribute `tenantIdentifier` (configurable, see below)
 
+Due to the varied nature of individual environments and configurations there is only a single concrete implementation available in
+this project named `PropertiesFileMultiTenantConnectionProvider` that creates instances of
+`PropertiesFileDataSourceConnectionProvider` which is based off of properties files in the classpath.  To use this implementation
+there should be a properties file for every available tenant in root of your classpath named `[tenant identifier].properties`. 
+Additionally you must have `hibernate-hikaricp.jar` and an implementation of HikariCP on your classpath.  
+
 #### Configuration using Spring JavaConfig
 
 Assuming you have a concrete implementation of `SpringMultiTenantConnectionProvider` named `MySpringMultiTenantConnectionProvider`
