@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2016 Elihu, LLC. All rights reserved.
+  ~
+  ~ $Id$
+  -->
+<suite name="Unit Test Suite" verbose="1">
+
+    <test name="Unit Tests">
+        <packages>
+        </packages>
+    </test>
+
+</suite>
+
