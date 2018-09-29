@@ -7,7 +7,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.annotation.Order;
@@ -41,7 +40,6 @@ public class DatabaseRoleInterceptor implements PriorityOrdered {
     /**
      * {@inheritDoc}
      */
-    @Value("20")
     public void setOrder(int order) {
         this.order = order;
     }

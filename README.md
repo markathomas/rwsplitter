@@ -13,7 +13,7 @@ Multi-tenant is achieved in one of two ways:
 
 Assuming you have a concrete implementation of `SpringMultiTenantConnectionProvider` named `MySpringMultiTenantConnectionProvider`
 your JavaConfig would look something like this:
- 
+
 ```
 import com.elihullc.rwsplitter.jpa.hibernate.SpringTenantIdentifierResolver;
 
@@ -26,7 +26,7 @@ public class RWSplitterConfiguration {
     public CurrentTenantIdentifierResolver tenantIdentifier() {
         return new SpringTenantIdentifierResolver();
     }
-    
+
     @Bean
     public MultiTenantConnectionProvider multiTenantConnectionProvider() {
         return new MySpringMultiTenantConnectionProvider(tenantIdentifier());
@@ -76,3 +76,34 @@ public class RWSplitterConfiguration {
 }
 ```
 
+#### Customizing the Multi-Tenant Configuration
+
+The following example shows the available properties to customize the multi-tenant configuration:
+
+```
+@Bean
+public CurrentTenantIdentifierResolver tenantIdentifier() {
+    final SpringTenantIdentifierResolver resolver = new SpringTenantIdentifierResolver();
+    
+    // Sets the default/fallback tenant if not explicitly set on the current thread or in the HttpSession. Default is "master".
+    resolver.setDefaultTenant("myTenant"); 
+    
+    // Sets the name of the HttpSession attribute used to lookup the current tenant if not programmatically set. Default is
+    // "tenantIdentifier".
+    resolver.setTenantIdentifierAttribute("myTenantAttribute");
+    
+    return resolver;
+}
+
+@Bean
+public DatabaseRoleInterceptor databaseRoleInterceptor() {
+    final DatabaseRoleInterceptor interceptor = new DatabaseRoleInterceptor();
+    
+    // Defines the sort order for the aspect. Lower values have higher priority. Default value is Integer.MIN_VALUE which is
+    // equivalent to Ordered.HIGHEST_PRECEDENCE.  This is used to ensure this aspect is woven after Spring's @Transactional so that
+    // it's code is invoked before @Transactional's
+    interceptor.setOrder(100);
+    
+    return interceptor;
+}
+``` 
