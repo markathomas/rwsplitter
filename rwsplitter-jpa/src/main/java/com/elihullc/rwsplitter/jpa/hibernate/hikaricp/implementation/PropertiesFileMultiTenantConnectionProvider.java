@@ -7,7 +7,7 @@ public class PropertiesFileMultiTenantConnectionProvider
   extends SpringMultiTenantConnectionProvider<PropertiesFileDataSourceConnectionProvider> {
 
     private static final long serialVersionUID = 7706020243181333623L;
-    
+
     public PropertiesFileMultiTenantConnectionProvider(final SpringTenantIdentifierResolver tenantIdentifierResolver) {
         super(tenantIdentifierResolver);
     }
