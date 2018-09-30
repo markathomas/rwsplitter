@@ -117,7 +117,7 @@ public DatabaseRoleInterceptor databaseRoleInterceptor() {
 #### Setting the Tenant via Spring AOP
 
 Simply annotate your methods with the provided `@CurrentTenant` annotation and include `TenantSettingInterceptor` in your Spring
-context or autowire `com.elihullc.rwsplitter.jpa.hibernate.aop` to have th tenant specified by `@CurrentTenant.value()` set before
+context or autowire `com.elihullc.rwsplitter.jpa.hibernate.aop` to have the tenant specified by `@CurrentTenant.value()` set before
 method invocation and removed after invocation.
 
 #### Common Pitfalls
