@@ -1,5 +1,8 @@
 package com.elihullc.rwsplitter.jpa.hibernate;
 
+/**
+ * A {@link Runnable} that sets the tenant on the current thread before invocation and resets it after invocation
+ */
 public class TenantSettingRunnable implements Runnable {
 
     private final String tenantIdentifier;

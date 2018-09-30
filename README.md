@@ -118,10 +118,12 @@ public DatabaseRoleInterceptor databaseRoleInterceptor() {
 
 If you're relying on an attribute in the `HttpSession` to specify the current tenant then by far the most common pitfall is
 forgetting to programmatically set the current tenant inside an asynchronous method invoked via a new thread or `ExecutorService`.
-To rectify simply set the current tenant inside your thread's `run()` method, `Runnable` or `Callable`.
+To rectify simply set the current tenant inside your thread's `run()` method, `Runnable` or `Callable` or, use the helper classes
+`TenantSettingRunnable` and `TenantSettingCallable` present in this project; 
 
 The next most common pitfall is not setting the current tenant before your transaction is started.  
 
 Another common pitfall is programmatically setting the current tenant and not resetting it in a `finally` block.  This will leave
 the previous tenant set on the current thread and can lead to memory leaks.  ALWAYS set the current tenant inside a try/finally
-block if setting programmatically!
+block if setting programmatically! `TenantSettingRunnable` and `TenantSettingCallable` present in this project are again your
+friends here. 

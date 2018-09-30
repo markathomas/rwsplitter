@@ -2,6 +2,9 @@ package com.elihullc.rwsplitter.jpa.hibernate;
 
 import java.util.concurrent.Callable;
 
+/**
+ * A {@link Callable} that sets the tenant on the current thread before invocation and resets it after invocation
+ */
 public class TenantSettingCallable<T> implements Callable<T> {
 
     private final String tenantIdentifier;
