@@ -12,7 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * Aspect that intercepts all public methods annotated with {@link CurrentTenant }and sets the tenant on the current thread based on
+ * Aspect that intercepts all public methods annotated with {@link CurrentTenant} and sets the tenant on the current thread based on
  * the value of {@link CurrentTenant#value()}.
  */
 @Aspect

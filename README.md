@@ -114,16 +114,22 @@ public DatabaseRoleInterceptor databaseRoleInterceptor() {
 }
 ``` 
 
+#### Setting the Tenant via Spring AOP
+
+Simply annotate your methods with the provided `@CurrentTenant` annotation and include `TenantSettingInterceptor` in your Spring
+context or autowire `com.elihullc.rwsplitter.jpa.hibernate.aop` to have th tenant specified by `@CurrentTenant.value()` set before
+method invocation and removed after invocation.
+
 #### Common Pitfalls
 
 If you're relying on an attribute in the `HttpSession` to specify the current tenant then by far the most common pitfall is
 forgetting to programmatically set the current tenant inside an asynchronous method invoked via a new thread or `ExecutorService`.
 To rectify simply set the current tenant inside your thread's `run()` method, `Runnable` or `Callable` or, use the helper classes
-`TenantSettingRunnable` and `TenantSettingCallable` present in this project; 
+`TenantSettingRunnable` and `TenantSettingCallable` present in this project or use `@CurrentTenant`; 
 
 The next most common pitfall is not setting the current tenant before your transaction is started.  
 
 Another common pitfall is programmatically setting the current tenant and not resetting it in a `finally` block.  This will leave
 the previous tenant set on the current thread and can lead to memory leaks.  ALWAYS set the current tenant inside a try/finally
 block if setting programmatically! `TenantSettingRunnable` and `TenantSettingCallable` present in this project are again your
-friends here. 
+friends here or use `@CurrentTenant`. 
