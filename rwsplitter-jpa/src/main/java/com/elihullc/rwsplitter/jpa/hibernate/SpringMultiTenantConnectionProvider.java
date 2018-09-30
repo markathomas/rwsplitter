@@ -1,5 +1,8 @@
 package com.elihullc.rwsplitter.jpa.hibernate;
 
+import com.elihullc.rwsplitter.jpa.CurrentDatabaseRole;
+import com.elihullc.rwsplitter.jpa.DatabaseRole;
+
 import java.io.Closeable;
 import java.util.Map;
 import java.util.Objects;

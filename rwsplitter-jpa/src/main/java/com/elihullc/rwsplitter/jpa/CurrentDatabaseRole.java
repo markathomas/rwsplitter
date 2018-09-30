@@ -1,4 +1,4 @@
-package com.elihullc.rwsplitter.jpa.hibernate;
+package com.elihullc.rwsplitter.jpa;
 
 /**
  * Utility class for holding the inheritable thread-local value for the current {@link DatabaseRole}.  The initial value of the

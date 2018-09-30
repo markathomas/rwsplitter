@@ -1,4 +1,4 @@
-package com.elihullc.rwsplitter.jpa.hibernate;
+package com.elihullc.rwsplitter.jpa;
 
 /**
  * Enum consisting of values representing a database reader and writer role
