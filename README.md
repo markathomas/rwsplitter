@@ -133,3 +133,15 @@ Another common pitfall is programmatically setting the current tenant and not re
 the previous tenant set on the current thread and can lead to memory leaks.  ALWAYS set the current tenant inside a try/finally
 block if setting programmatically! `TenantSettingRunnable` and `TenantSettingCallable` present in this project are again your
 friends here or use `@CurrentTenant`. 
+
+#### Installation
+
+RWSplitter is available from [Maven Central](http://search.maven.org/#search|ga|1|a%3Arwsplitter-jpa):
+
+```xml
+    <dependency>
+        <groupId>com.elihullc</groupId>
+        <artifactId>rwsplitter-jpa</artifactId>
+    </dependency>
+```
+
