@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.elihullc</groupId>
         <artifactId>rwsplitter</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
     <artifactId>rwsplitter-jpa</artifactId>
     <name>rwsplitter-jpa</name>

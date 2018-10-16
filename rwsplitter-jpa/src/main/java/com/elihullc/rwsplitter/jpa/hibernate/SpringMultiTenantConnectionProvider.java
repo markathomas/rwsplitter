@@ -130,7 +130,7 @@ public abstract class SpringMultiTenantConnectionProvider<T extends StoppableCon
         return this.getConnectionProvider(tenantIdentifier);
     }
 
-    private StoppableConnectionProvider getConnectionProvider(final String tenantIdentifier) {
+    protected StoppableConnectionProvider getConnectionProvider(final String tenantIdentifier) {
         if (CurrentDatabaseRole.getCurrentRole() == DatabaseRole.READER
           || TransactionSynchronizationManager.isCurrentTransactionReadOnly()) {
             this.logger.trace("Fetching reader connection provider for tenant {}", tenantIdentifier);

@@ -7,9 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Aspect
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
 public class DatabaseRoleInterceptor implements PriorityOrdered {
 
-    private int order = Ordered.HIGHEST_PRECEDENCE;
+    private int order = 20;
 
     @Pointcut(value = "execution(public * *(..))")
     public void anyPublicMethod() { }
