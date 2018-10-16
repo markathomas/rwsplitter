@@ -105,9 +105,8 @@ public CurrentTenantIdentifierResolver tenantIdentifier() {
 public DatabaseRoleInterceptor databaseRoleInterceptor() {
     final DatabaseRoleInterceptor interceptor = new DatabaseRoleInterceptor();
     
-    // Defines the sort order for the aspect. Lower values have higher priority. Default value is Integer.MIN_VALUE which is
-    // equivalent to Ordered.HIGHEST_PRECEDENCE.  This is used to ensure this aspect is woven after Spring's @Transactional so that
-    // it's code is invoked before @Transactional's
+    // Defines the sort order for the aspect. Lower values have higher priority. Default value is 20 which is enough to
+    // ensure this aspect is woven after Spring's @Transactional so that it's code is invoked before @Transactional's
     interceptor.setOrder(100);
     
     return interceptor;
