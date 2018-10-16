@@ -29,7 +29,7 @@ import com.elihullc.rwsplitter.jpa.hibernate.SpringTenantIdentifierResolver;
 public class RWSplitterConfiguration {
 
     @Bean
-    public CurrentTenantIdentifierResolver tenantIdentifier() {
+    public SpringTenantIdentifierResolver tenantIdentifier() {
         return new SpringTenantIdentifierResolver();
     }
 
