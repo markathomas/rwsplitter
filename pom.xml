@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.elihullc</groupId>
     <artifactId>rwsplitter</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
     <name>rwsplitter</name>
     <description>Multi-tenant, read/write splitter for Spring and JPA with Hibernate</description>
@@ -32,6 +32,7 @@
                         <groupId>org.slf4j</groupId>
                     </exclusion>
                 </exclusions>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -76,6 +77,12 @@
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
                 <version>${hikaricp.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-ssm</artifactId>
+                <version>${aws.version}</version>
                 <scope>compile</scope>
             </dependency>
 
@@ -128,12 +135,13 @@
         <findbugs.version>3.0.1</findbugs.version>
         <h2.version>1.4.196</h2.version>
         <hibernate.version>5.2.17.Final</hibernate.version>
-        <hikaricp.version>3.2.0</hikaricp.version>
+        <hikaricp.version>3.4.1</hikaricp.version>
         <mysql.version>6.0.6</mysql.version>
         <slf4j.version>1.7.25</slf4j.version>
         <servlet.version>3.1.0</servlet.version>
-        <spring.version>5.0.9.RELEASE</spring.version>
+        <spring.version>5.1.9.RELEASE</spring.version>
         <testng.version>6.9.10</testng.version>
+        <aws.version>1.11.699</aws.version>
     </properties>
 
     <build>

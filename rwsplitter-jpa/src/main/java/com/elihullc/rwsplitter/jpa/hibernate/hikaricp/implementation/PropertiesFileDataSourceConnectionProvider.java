@@ -10,7 +10,7 @@ public class PropertiesFileDataSourceConnectionProvider extends HikariCPDataSour
 
     private static final long serialVersionUID = 4473698965793267295L;
 
-    private Properties properties = new Properties();
+    protected Properties properties = new Properties();
 
     public PropertiesFileDataSourceConnectionProvider(final String tenantIdentifier) {
         super(tenantIdentifier);
@@ -49,6 +49,6 @@ public class PropertiesFileDataSourceConnectionProvider extends HikariCPDataSour
 
     @Override
     public boolean isReadOnly() {
-        return Boolean.valueOf(this.properties.getProperty("database.readOnly"));
+        return Boolean.parseBoolean(this.properties.getProperty("database.readOnly"));
     }
 }

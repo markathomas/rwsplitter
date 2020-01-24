@@ -3,30 +3,28 @@ package com.elihullc.rwsplitter.jpa.hibernate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * Class implementing {@link CurrentTenantIdentifierResolver} that returns the tenant for the current thread.  First the
  * thread-local value of {@link #getCurrentTenant()} is used, if present.  Second, an attempt is made to retrieve the tenant
- * from the current {@link javax.servlet.http.HttpSession} under the session attribute {@link #TENANT_IDENTIFIER_ATTR}.  Finally,
- * if both of the previous values are null the value of {@link #getDefaultTenant()} is used.
+ * from either the default or supplied {@link Supplier<String>}.  Finally, if both of the previous values are null the value
+ * of {@link #getDefaultTenant()} is used.
  */
 public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierResolver {
 
     public static final String DEFAULT_TENANT = "master";
 
     private static final InheritableThreadLocal<List<String>> CURRENT_TENANT = new InheritableThreadLocal<>();
-    private static final String TENANT_IDENTIFIER_ATTR = "tenantIdentifier";
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String defaultTenant = DEFAULT_TENANT;
-    private String tenantIdentifierAttribute = TENANT_IDENTIFIER_ATTR;
+    private Supplier<String> tenantSupplier;
 
     /**
      * {@inheritDoc}
@@ -34,15 +32,22 @@ public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierRe
     @Override
     public String resolveCurrentTenantIdentifier() {
         final String tenantId = Optional.ofNullable(getCurrentTenant())
-          .orElseGet(() -> Optional.ofNullable(RequestContextHolder.getRequestAttributes())
-            .map(ServletRequestAttributes.class::cast)
-            .map(ServletRequestAttributes::getRequest)
-            .map(req -> req.getSession(false))
-            .map(session -> session.getAttribute(getTenantIdentifierAttribute()))
-            .map(Object::toString)
-            .orElse(getDefaultTenant()));
+          .orElseGet(() -> Optional.ofNullable(
+            Optional.ofNullable(this.tenantSupplier).orElse(this.instantiateDefaultTenantSupplier()).get())
+              .orElse(getDefaultTenant()));
         this.logger.trace("Resolved current tenant identifier to {}", tenantId);
         return tenantId;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Supplier<String> instantiateDefaultTenantSupplier() {
+        try {
+            final Class<?> klass = Class.forName("com.elihullc.rwsplitter.jpa.hibernate.SpringMVCTenantSupplier");
+            this.tenantSupplier = (Supplier<String>)klass.newInstance();
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            throw new RuntimeException("Error instantiating default tenant supplier", e);
+        }
+        return this.tenantSupplier;
     }
 
     /**
@@ -62,19 +67,19 @@ public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierRe
     }
 
     /**
-     * Gets the value of the tenant attribute stored in a {@link javax.servlet.http.HttpSession}. Default is "tenantIdentifier"
-     * @return the value of the tenant attribute stored in a {@link javax.servlet.http.HttpSession}
+     * Retrieves the current tenant supplier. Default is implementation of {@link SpringMVCTenantSupplier}
+     * @return the current tenant supplier
      */
-    protected String getTenantIdentifierAttribute() {
-        return this.tenantIdentifierAttribute;
+    public Supplier<String> getTenantSupplier() {
+        return this.tenantSupplier;
     }
 
     /**
-     * Sets the value of the tenant attribute stored in a {@link javax.servlet.http.HttpSession}
-     * @param tenantIdentifierAttribute the value of the tenant attribute stored in a {@link javax.servlet.http.HttpSession}
+     * Sets the current tenant supplier
+     * @param tenantSupplier the tenant supplier
      */
-    public void setTenantIdentifierAttribute(final String tenantIdentifierAttribute) {
-        this.tenantIdentifierAttribute = tenantIdentifierAttribute;
+    public void setTenantSupplier(Supplier<String> tenantSupplier) {
+        this.tenantSupplier = tenantSupplier;
     }
 
     /**

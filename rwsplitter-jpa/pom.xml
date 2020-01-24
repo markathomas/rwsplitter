@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.elihullc</groupId>
         <artifactId>rwsplitter</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </parent>
     <artifactId>rwsplitter-jpa</artifactId>
     <name>rwsplitter-jpa</name>
@@ -27,6 +27,7 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -71,6 +72,12 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${hikaricp.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-ssm</artifactId>
+            <version>${aws.version}</version>
             <scope>compile</scope>
         </dependency>
 
