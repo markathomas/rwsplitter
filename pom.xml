@@ -328,36 +328,6 @@
         <developerConnection>scm:git:git://github.com/markathomas/rwsplitter.git</developerConnection>
     </scm>
 
-    <repositories>
-        <repository>
-            <id>maven-central</id>
-            <name>Maven Central repo</name>
-            <url>https://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
-            <id>spring-maven-release</id>
-            <name>Spring Maven Release Repository</name>
-            <url>http://maven.springframework.org/release</url>
-        </repository>
-        <repository>
-            <id>spring-maven-milestone</id>
-            <name>Spring Maven Milestone Repository</name>
-            <url>http://maven.springframework.org/milestone</url>
-        </repository>
-        <repository>
-            <id>JBoss Repo</id>
-            <url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-            <name>JBoss Repo</name>
-        </repository>
-        <repository>
-            <id>sonatype-oss-public</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
-
     <distributionManagement>
         <downloadUrl>https://github.com/markathomas/rwsplitter</downloadUrl>
         <snapshotRepository>
