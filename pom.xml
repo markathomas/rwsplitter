@@ -139,7 +139,7 @@
         <mysql.version>8.0.16</mysql.version>
         <slf4j.version>1.7.25</slf4j.version>
         <servlet.version>3.1.0</servlet.version>
-        <spring.version>5.1.9.RELEASE</spring.version>
+        <spring.version>6.0.0</spring.version>
         <testng.version>6.9.10</testng.version>
         <aws.version>1.11.699</aws.version>
     </properties>
