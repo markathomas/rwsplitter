@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation used to specify the current tenant for a class or method.
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface CurrentTenant {
