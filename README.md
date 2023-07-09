@@ -75,11 +75,6 @@ public class RWSplitterConfiguration {
     public ValidatorFactory validatorFactory() {
         return new LocalValidatorFactoryBean();
     }
-
-    @Bean
-    public BeanPostProcessor persistenceExceptionTranslationPostProcessor() {
-        return new PersistenceExceptionTranslationPostProcessor();
-    }
 }
 ```
 
@@ -95,9 +90,8 @@ public CurrentTenantIdentifierResolver tenantIdentifier() {
     // Sets the default/fallback tenant if not explicitly set on the current thread or in the HttpSession. Default is "master".
     resolver.setDefaultTenant("myTenant"); 
     
-    // Sets the name of the HttpSession attribute used to lookup the current tenant if not programmatically set. Default is
-    // "tenantIdentifier".
-    resolver.setTenantIdentifierAttribute("myTenantAttribute");
+    // Sets the Supplier from which to provide the tenant identifier. Defaults to SpringMVCTenantSupplier
+    resolver.setTenantSupplier(() -> "my tenant from somewhere, e.g. (session, cache, etc.)"));
     
     return resolver;
 }
@@ -136,12 +130,14 @@ friends here or use `@CurrentTenant`.
 
 #### Installation
 
-RWSplitter is available from [Maven Central](http://search.maven.org/#search|ga|1|a%3Arwsplitter-jpa):
+RWSplitter is available from [Maven Central](https://search.maven.org/#search|ga|1|a%3Arwsplitter-jpa):
 
+Latest version:
 ```xml
     <dependency>
         <groupId>com.elihullc</groupId>
         <artifactId>rwsplitter-jpa</artifactId>
+        <version>2.0.2</version>
     </dependency>
 ```
 
