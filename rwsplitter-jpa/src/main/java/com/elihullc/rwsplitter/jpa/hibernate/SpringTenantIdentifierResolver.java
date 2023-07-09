@@ -1,5 +1,6 @@
 package com.elihullc.rwsplitter.jpa.hibernate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,9 @@ import org.slf4j.LoggerFactory;
  * from either the default or supplied {@link Supplier<String>}.  Finally, if both of the previous values are null the value
  * of {@link #getDefaultTenant()} is used.
  */
-public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierResolver {
+public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierResolver, Serializable {
+
+    private static final long serialVersionUID = -23L;
 
     public static final String DEFAULT_TENANT = "master";
 

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.elihullc</groupId>
     <artifactId>rwsplitter</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <packaging>pom</packaging>
     <name>rwsplitter</name>
     <description>Multi-tenant, read/write splitter for Spring and JPA with Hibernate</description>
