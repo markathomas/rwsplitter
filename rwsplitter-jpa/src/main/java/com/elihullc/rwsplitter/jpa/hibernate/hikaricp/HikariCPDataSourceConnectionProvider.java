@@ -18,7 +18,7 @@ public abstract class HikariCPDataSourceConnectionProvider extends HikariCPConne
 
     protected HikariCPDataSourceConnectionProvider(final String tenantIdentifier) {
         this.beforeConfiguration(tenantIdentifier);
-        final Map<String, String> dbProps = this.getDataSourceProperties(tenantIdentifier);
+        final Map<String, Object> dbProps = this.getDataSourceProperties(tenantIdentifier);
         this.configure(dbProps);
         this.afterConfiguration(tenantIdentifier);
     }
@@ -28,8 +28,8 @@ public abstract class HikariCPDataSourceConnectionProvider extends HikariCPConne
      * @param tenantIdentifier the tenant identifier
      * @return map of properties used to configure a {@link HikariCPConnectionProvider} for the provided tenant
      */
-    protected Map<String, String> getDataSourceProperties(String tenantIdentifier) {
-        final Map<String, String> props = new HashMap<>();
+    protected Map<String, Object> getDataSourceProperties(String tenantIdentifier) {
+        final Map<String, Object> props = new HashMap<>();
         props.put(AvailableSettings.AUTOCOMMIT, this.isReadOnly() ? "true" : "false");
         final String pre = HikariConfigurationUtil.CONFIG_PREFIX;
         props.put(pre + "dataSourceClassName", getDataSourceClassName());

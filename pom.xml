@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.elihullc</groupId>
     <artifactId>rwsplitter</artifactId>
-    <version>1.0.2</version>
+    <version>2.0.0</version>
     <packaging>pom</packaging>
     <name>rwsplitter</name>
     <description>Multi-tenant, read/write splitter for Spring and JPA with Hibernate</description>
@@ -15,95 +15,8 @@
         <module>rwsplitter-jpa</module>
     </modules>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>jcl-over-slf4j</artifactId>
-                        <groupId>org.slf4j</groupId>
-                    </exclusion>
-                </exclusions>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aop</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-tx</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-                <version>${aspectj.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-hikaricp</artifactId>
-                <version>${hibernate.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.zaxxer</groupId>
-                <artifactId>HikariCP</artifactId>
-                <version>${hikaricp.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.amazonaws</groupId>
-                <artifactId>aws-java-sdk-ssm</artifactId>
-                <version>${aws.version}</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <!-- H2 database -->
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <properties>
-        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
         <maven.jar.plugin.version>2.4</maven.jar.plugin.version>
         <maven.source.plugin.version>2.2.1</maven.source.plugin.version>
         <maven.javadoc.plugin.version>2.9</maven.javadoc.plugin.version>
@@ -118,30 +31,28 @@
         <maven.git.commit.id.plugin.version>2.2.0</maven.git.commit.id.plugin.version>
         <maven.surefire.plugin.version>2.19.1</maven.surefire.plugin.version>
         <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
-        <maven.findbugs.plugin.version>3.0.0</maven.findbugs.plugin.version>
         <maven.checkstyle.plugin.version>2.12</maven.checkstyle.plugin.version>
         <maven.sonar.plugin.version>2.6</maven.sonar.plugin.version>
         <maven.jacoco.plugin.version>0.7.4.201502262128</maven.jacoco.plugin.version>
         <maven.build.helper.plugin.version>1.9.1</maven.build.helper.plugin.version>
         <maven.resources.plugin.version>2.4</maven.resources.plugin.version>
 
-        <compile.source>1.8</compile.source>
-        <compile.target>1.8</compile.target>
+        <compile.source>17</compile.source>
+        <compile.target>17</compile.target>
         <it.localWorkers>3</it.localWorkers>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependency versions -->
         <aspectj.version>1.8.13</aspectj.version>
-        <findbugs.version>3.0.1</findbugs.version>
-        <h2.version>2.1.210</h2.version>
-        <hibernate.version>5.2.17.Final</hibernate.version>
-        <hikaricp.version>3.4.1</hikaricp.version>
-        <mysql.version>8.0.16</mysql.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <servlet.version>3.1.0</servlet.version>
-        <spring.version>5.1.9.RELEASE</spring.version>
+        <h2.version>2.2.220</h2.version>
+        <hibernate.version>6.2.5.Final</hibernate.version>
+        <hikaricp.version>5.0.1</hikaricp.version>
+        <mysql.version>8.0.33</mysql.version>
+        <slf4j.version>1.7.26</slf4j.version>
+        <servlet.version>6.0.0</servlet.version>
+        <spring.version>6.0.0</spring.version>
         <testng.version>6.9.10</testng.version>
-        <aws.version>1.11.699</aws.version>
+        <aws.version>1.12.504</aws.version>
     </properties>
 
     <build>
@@ -200,26 +111,6 @@
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>${maven.findbugs.plugin.version}</version>
-                <configuration>
-                    <effort>Max</effort>
-                    <threshold>Low</threshold>
-                    <xmlOutput>true</xmlOutput>
-                    <excludeFilterFile>${project.basedir}/src/main/xml/findbugs-exclude.xml</excludeFilterFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>findbugs-check</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
