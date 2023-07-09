@@ -91,7 +91,7 @@ public CurrentTenantIdentifierResolver tenantIdentifier() {
     resolver.setDefaultTenant("myTenant"); 
     
     // Sets the Supplier from which to provide the tenant identifier. Defaults to SpringMVCTenantSupplier
-    resolver.setTenantSupplier(() -> "my tenant from somewhere, e.g. (session, cache, etc.)"));
+    resolver.setTenantSupplier(() -> "my tenant from somewhere, e.g. (session, cache, etc.)");
     
     return resolver;
 }
