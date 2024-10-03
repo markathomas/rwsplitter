@@ -3,12 +3,14 @@ package com.elihullc.rwsplitter.jpa.hibernate.hikaricp.implementation;
 import com.elihullc.rwsplitter.jpa.hibernate.SpringMultiTenantConnectionProvider;
 import com.elihullc.rwsplitter.jpa.hibernate.SpringTenantIdentifierResolver;
 
+import java.io.Serial;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class SystemsManagerMultiTenantConnectionProvider
   extends SpringMultiTenantConnectionProvider<SystemsManagerDataSourceConnectionProvider> {
 
+    @Serial
     private static final long serialVersionUID = 1578118147882724511L;
 
     public SystemsManagerMultiTenantConnectionProvider(SpringTenantIdentifierResolver tenantIdentifierResolver) {

@@ -4,10 +4,12 @@ import com.elihullc.rwsplitter.jpa.hibernate.hikaricp.HikariCPDataSourceConnecti
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serial;
 import java.util.Properties;
 
 public class PropertiesFileDataSourceConnectionProvider extends HikariCPDataSourceConnectionProvider {
 
+    @Serial
     private static final long serialVersionUID = 4473698965793267295L;
 
     protected Properties properties = new Properties();

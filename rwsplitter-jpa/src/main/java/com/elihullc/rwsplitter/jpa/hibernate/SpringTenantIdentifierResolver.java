@@ -1,5 +1,6 @@
 package com.elihullc.rwsplitter.jpa.hibernate;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierResolver, Serializable {
 
+    @Serial
     private static final long serialVersionUID = -23L;
 
     public static final String DEFAULT_TENANT = "master";
