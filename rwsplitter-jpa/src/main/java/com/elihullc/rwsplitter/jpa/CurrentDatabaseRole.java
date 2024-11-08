@@ -6,12 +6,7 @@ package com.elihullc.rwsplitter.jpa;
  */
 public final class CurrentDatabaseRole {
 
-    private static final ThreadLocal<DatabaseRole> CURRENT_ROLE = new InheritableThreadLocal<DatabaseRole>() {
-        @Override
-        protected DatabaseRole initialValue() {
-            return DatabaseRole.WRITER;
-        }
-    };
+    private static final ThreadLocal<DatabaseRole> CURRENT_ROLE = ThreadLocal.withInitial(() -> DatabaseRole.WRITER);
 
     private CurrentDatabaseRole() {
     }

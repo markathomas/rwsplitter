@@ -4,8 +4,6 @@ import com.elihullc.rwsplitter.jpa.hibernate.SpringMultiTenantConnectionProvider
 import com.elihullc.rwsplitter.jpa.hibernate.SpringTenantIdentifierResolver;
 
 import java.io.Serial;
-import java.util.Map;
-import java.util.function.Supplier;
 
 public class SystemsManagerMultiTenantConnectionProvider
   extends SpringMultiTenantConnectionProvider<SystemsManagerDataSourceConnectionProvider> {
@@ -15,16 +13,6 @@ public class SystemsManagerMultiTenantConnectionProvider
 
     public SystemsManagerMultiTenantConnectionProvider(SpringTenantIdentifierResolver tenantIdentifierResolver) {
         super(tenantIdentifierResolver);
-    }
-
-    public SystemsManagerMultiTenantConnectionProvider(SpringTenantIdentifierResolver tenantIdentifierResolver,
-      Supplier<Map<String, Boolean>> mapSupplier) {
-        super(tenantIdentifierResolver, mapSupplier);
-    }
-
-    public SystemsManagerMultiTenantConnectionProvider(SpringTenantIdentifierResolver tenantIdentifierResolver,
-      Map<String, Boolean> migratedTenants) {
-        super(tenantIdentifierResolver, migratedTenants);
     }
 
     @Override

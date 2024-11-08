@@ -24,7 +24,7 @@ public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierRe
 
     public static final String DEFAULT_TENANT = "master";
 
-    private static final InheritableThreadLocal<List<String>> CURRENT_TENANT = new InheritableThreadLocal<>();
+    private static final ThreadLocal<List<String>> CURRENT_TENANT = new ThreadLocal<>();
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -96,6 +96,20 @@ public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierRe
     }
 
     /**
+     * Returns all tenants that are queued within this thread
+     * @return all tenants that are queued within this thread
+     */
+    public static synchronized List<String> getAllTenants() {
+        List<String> tenants = CURRENT_TENANT.get();
+        if (tenants == null) {
+            tenants = new ArrayList<>();
+        } else {
+            tenants = new ArrayList<>(tenants);
+        }
+        return tenants;
+    }
+
+    /**
      * Gets the value of the current tenant thread-local
      * @return the value of the current tenant thread-local
      */
@@ -134,5 +148,12 @@ public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierRe
         } else {
             CURRENT_TENANT.set(tenants);
         }
+    }
+
+    /**
+     * Removes all tenants from current thread
+     */
+    public static synchronized void clearAllTenants() {
+        CURRENT_TENANT.set(new ArrayList<>());
     }
 }

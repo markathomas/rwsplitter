@@ -20,20 +20,20 @@ public class SpringMVCTenantSupplier implements Supplier<String> {
           .map(req -> req.getSession(false))
           .map(session -> session.getAttribute(getTenantIdentifierAttribute()))
           .map(Object::toString)
-          .orElse(null);
+          .orElse(SpringTenantIdentifierResolver.DEFAULT_TENANT);
     }
 
     /**
-     * Gets the value of the tenant attribute stored in a {@link javax.servlet.http.HttpSession}. Default is "tenantIdentifier"
-     * @return the value of the tenant attribute stored in a {@link javax.servlet.http.HttpSession}
+     * Gets the value of the tenant attribute stored in a {@link jakarta.servlet.http.HttpSession}. Default is "tenantIdentifier"
+     * @return the value of the tenant attribute stored in a {@link jakarta.servlet.http.HttpSession}
      */
     protected String getTenantIdentifierAttribute() {
         return this.tenantIdentifierAttribute;
     }
 
     /**
-     * Sets the value of the tenant attribute stored in a {@link javax.servlet.http.HttpSession}
-     * @param tenantIdentifierAttribute the value of the tenant attribute stored in a {@link javax.servlet.http.HttpSession}
+     * Sets the value of the tenant attribute stored in a {@link jakarta.servlet.http.HttpSession}
+     * @param tenantIdentifierAttribute the value of the tenant attribute stored in a {@link jakarta.servlet.http.HttpSession}
      */
     public void setTenantIdentifierAttribute(final String tenantIdentifierAttribute) {
         this.tenantIdentifierAttribute = tenantIdentifierAttribute;

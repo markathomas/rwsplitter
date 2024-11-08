@@ -4,15 +4,8 @@ import com.elihullc.rwsplitter.jpa.CurrentDatabaseRole;
 import com.elihullc.rwsplitter.jpa.DatabaseRole;
 
 import java.io.Closeable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
-
-import javax.sql.DataSource;
 
 import org.hibernate.engine.jdbc.connections.spi.AbstractMultiTenantConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
@@ -47,46 +40,10 @@ public abstract class SpringMultiTenantConnectionProvider<T extends StoppableCon
 
     private final transient SpringTenantIdentifierResolver tenantIdentifierResolver;
     private final transient Logger logger = LoggerFactory.getLogger(getClass());
-    private final Map<String, Boolean> migratedTenants;
     private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     protected SpringMultiTenantConnectionProvider(final SpringTenantIdentifierResolver tenantIdentifierResolver) {
-        this(tenantIdentifierResolver, new ConcurrentHashMap<>());
-    }
-    protected SpringMultiTenantConnectionProvider(final SpringTenantIdentifierResolver tenantIdentifierResolver,
-      final Supplier<Map<String, Boolean>> mapSupplier) {
-        this(tenantIdentifierResolver, mapSupplier.get());
-    }
-    protected SpringMultiTenantConnectionProvider(final SpringTenantIdentifierResolver tenantIdentifierResolver,
-      final Map<String, Boolean> migratedTenants) {
         this.tenantIdentifierResolver = tenantIdentifierResolver;
-        this.migratedTenants = migratedTenants;
-    }
-
-    /**
-     * Returns a {@link Map} of tenants that have their own database or schema and require their own {@link DataSource}
-     * @return {@link Map} of tenants that have their own database or schema and require their own {@link DataSource}
-     */
-    protected Map<String, Boolean> getMigratedTenants() {
-        if (this.initialized.compareAndSet(false, true)) {
-            final String migrated = Optional.ofNullable(System.getenv("MIGRATED_TENANTS"))
-              .orElse(System.getProperty("migrated.tenants", ""));
-            if (!migrated.isEmpty()) {
-                Stream.of(migrated.split(",")).map(String::trim).forEach(tenant ->
-                  this.migratedTenants.put(tenant, Boolean.TRUE));
-            }
-        }
-        return this.migratedTenants;
-    }
-
-    /**
-     * Adds a tenant to the map of migrated tenants via their tenant identifier
-     * @param tenantIdentifier the tenant identifier
-     * @return previous value of map if tenant was present, false otherwise
-     */
-    @ManagedOperation(description = "Adds a tenant to the map of migrated tenants via their tenant identifier")
-    public boolean addMigratedTenant(String tenantIdentifier) {
-        return Optional.ofNullable(this.getMigratedTenants().put(tenantIdentifier, Boolean.TRUE)).orElse(false);
     }
 
     /**
@@ -105,8 +62,9 @@ public abstract class SpringMultiTenantConnectionProvider<T extends StoppableCon
      */
     @Override
     protected ConnectionProvider getAnyConnectionProvider() {
-        this.logger.trace("Selecting any/default connection provider of {}", this.tenantIdentifierResolver.getDefaultTenant());
-        return this.selectConnectionProvider(this.tenantIdentifierResolver.getDefaultTenant());
+        final String tenant = this.tenantIdentifierResolver.resolveCurrentTenantIdentifier();
+        this.logger.trace("Selecting any/default connection provider of {}", tenant);
+        return this.selectConnectionProvider(tenant);
     }
 
     /**
@@ -118,14 +76,6 @@ public abstract class SpringMultiTenantConnectionProvider<T extends StoppableCon
      */
     @Override
     protected ConnectionProvider selectConnectionProvider(String tenantIdentifier) {
-        if (!Objects.equals(tenantIdentifier, this.tenantIdentifierResolver.getDefaultTenant())
-          && !this.getMigratedTenants().isEmpty()
-          && !this.getMigratedTenants().getOrDefault(tenantIdentifier, Boolean.FALSE)) {
-            this.logger.error("Attempting to use a schema/database that does not yet exist for tenant {}.  Please migrate the "
-              + "schema/database and then invoke this bean's JMX addMigratedTenant(String tenantIdentifier) "
-              + "operation to signal completion", tenantIdentifier);
-            tenantIdentifier = this.tenantIdentifierResolver.getDefaultTenant();
-        }
         this.logger.trace("Selecting specific connection provider for tenant {}", tenantIdentifier);
         return this.getConnectionProvider(tenantIdentifier);
     }
