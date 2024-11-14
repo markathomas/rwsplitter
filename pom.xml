@@ -16,27 +16,6 @@
     </modules>
 
     <properties>
-        <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
-        <maven.jar.plugin.version>2.4</maven.jar.plugin.version>
-        <maven.source.plugin.version>2.2.1</maven.source.plugin.version>
-        <maven.javadoc.plugin.version>2.9</maven.javadoc.plugin.version>
-        <maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
-        <maven.gpg.plugin.version>1.4</maven.gpg.plugin.version>
-        <maven.assembly.plugin.version>2.4</maven.assembly.plugin.version>
-        <maven.rar.plugin.version>2.2</maven.rar.plugin.version>
-        <maven.bundle.plugin.version>2.3.7</maven.bundle.plugin.version>
-        <maven.shade.plugin.version>2.2</maven.shade.plugin.version>
-        <maven.dependency.plugin.version>2.6</maven.dependency.plugin.version>
-        <maven.animal.sniffer.plugin.version>1.14</maven.animal.sniffer.plugin.version>
-        <maven.git.commit.id.plugin.version>2.2.0</maven.git.commit.id.plugin.version>
-        <maven.surefire.plugin.version>2.19.1</maven.surefire.plugin.version>
-        <maven.failsafe.plugin.version>2.14</maven.failsafe.plugin.version>
-        <maven.checkstyle.plugin.version>2.12</maven.checkstyle.plugin.version>
-        <maven.sonar.plugin.version>2.6</maven.sonar.plugin.version>
-        <maven.jacoco.plugin.version>0.7.4.201502262128</maven.jacoco.plugin.version>
-        <maven.build.helper.plugin.version>1.9.1</maven.build.helper.plugin.version>
-        <maven.resources.plugin.version>2.4</maven.resources.plugin.version>
-
         <compile.source>17</compile.source>
         <compile.target>17</compile.target>
         <it.localWorkers>3</it.localWorkers>
@@ -73,7 +52,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
+                <version>3.13.0</version>
                 <configuration>
                     <source>${compile.source}</source>
                     <target>${compile.target}</target>
@@ -94,7 +73,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven.resources.plugin.version}</version>
+                <version>3.3.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
@@ -102,7 +81,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.plugin.version}</version>
+                <version>3.7.0</version>
                 <configuration>
                     <breakiterator>true</breakiterator>
                     <failOnError>false</failOnError>
@@ -112,11 +91,11 @@
                         <dependencySourceInclude>com.elihullc.rwsplitter:*</dependencySourceInclude>
                     </dependencySourceIncludes>
                     <notimestamp>true</notimestamp>
-                    <additionalparam>-Xdoclint:-reference</additionalparam>
+                    <additionalOptions>-Xdoclint:-reference</additionalOptions>
                     <links>
                         <link>https://docs.spring.io/spring/docs/${spring.version}/javadoc-api/</link>
                         <link>https://www.slf4j.org/apidocs/</link>
-                        <link>https://docs.oracle.com/javaee/7/api/</link>
+                        <link>https://docs.oracle.com/en/java/javase/17/docs/api/</link>
                     </links>
                 </configuration>
                 <executions>
@@ -131,7 +110,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.plugin.version}</version>
+                <version>3.2.5</version>
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
@@ -141,7 +120,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>${maven.source.plugin.version}</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -155,7 +134,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven.jar.plugin.version}</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <index>true</index>
@@ -184,16 +163,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.9</version>
+                <version>3.0.0</version>
             </plugin>
 
             <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.6.0</version>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.7.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <publishingServerId>central</publishingServerId>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
 
@@ -266,15 +247,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.3</version>
+                <version>3.7.0</version>
                 <inherited>false</inherited>
                 <configuration>
                     <notimestamp>true</notimestamp>
-                    <aggregate>true</aggregate>
                     <links>
                         <link>https://docs.spring.io/spring/docs/${spring.version}/javadoc-api/</link>
                         <link>https://www.slf4j.org/apidocs/</link>
-                        <link>https://docs.oracle.com/javaee/7/api/</link>
+                        <link>https://docs.oracle.com/en/java/javase/17/docs/api/</link>
                     </links>
                 </configuration>
                 <reportSets>
@@ -300,7 +280,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>1.6</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
