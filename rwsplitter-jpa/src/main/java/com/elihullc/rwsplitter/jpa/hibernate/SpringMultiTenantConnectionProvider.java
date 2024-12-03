@@ -5,7 +5,6 @@ import com.elihullc.rwsplitter.jpa.DatabaseRole;
 
 import java.io.Closeable;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.hibernate.engine.jdbc.connections.spi.AbstractMultiTenantConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
@@ -33,14 +32,13 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  */
 @ManagedResource
 public abstract class SpringMultiTenantConnectionProvider<T extends StoppableConnectionProvider>
-  extends AbstractMultiTenantConnectionProvider implements Closeable {
+  extends AbstractMultiTenantConnectionProvider<String> implements Closeable {
 
     private final ConcurrentHashMap<String, T> connectionProviders = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, T> readOnlyConnectionProviders = new ConcurrentHashMap<>();
 
     private final transient SpringTenantIdentifierResolver tenantIdentifierResolver;
     private final transient Logger logger = LoggerFactory.getLogger(getClass());
-    private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     protected SpringMultiTenantConnectionProvider(final SpringTenantIdentifierResolver tenantIdentifierResolver) {
         this.tenantIdentifierResolver = tenantIdentifierResolver;

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * from either the default or supplied {@link Supplier<String>}.  Finally, if both of the previous values are null the value
  * of {@link #getDefaultTenant()} is used.
  */
-public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierResolver, Serializable {
+public class SpringTenantIdentifierResolver implements CurrentTenantIdentifierResolver<String>, Serializable {
 
     @Serial
     private static final long serialVersionUID = -23L;
