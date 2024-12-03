@@ -24,7 +24,7 @@ public class DatabaseRoleInterceptor implements PriorityOrdered {
     @Pointcut(value = "execution(public * *(..))")
     public void anyPublicMethod() { }
 
-    @Around("@annotation(txAnnotation))")
+    @Around(value = "anyPublicMethod() && @annotation(txAnnotation)", argNames = "txAnnotation")
     public Object around(final ProceedingJoinPoint joinPoint, final Transactional txAnnotation) throws Throwable {
         CurrentDatabaseRole.setCurrentRole(txAnnotation.readOnly() ? DatabaseRole.READER : DatabaseRole.WRITER);
         try {

@@ -22,7 +22,7 @@ public class TenantSettingInterceptor implements PriorityOrdered {
     @Pointcut(value = "execution(public * *(..))")
     public void anyPublicMethod() { }
 
-    @Around("@annotation(currentTenant))")
+    @Around(value = "anyPublicMethod() && @annotation(currentTenant)", argNames = "currentTenant")
     public Object around(final ProceedingJoinPoint joinPoint, final CurrentTenant currentTenant) throws Throwable {
         SpringTenantIdentifierResolver.setCurrentTenant(currentTenant.value());
         try {
