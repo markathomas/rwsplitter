@@ -32,16 +32,10 @@ public class TenantSettingInterceptor implements PriorityOrdered {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void setOrder(int order) {
         this.order = order;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getOrder() {
         return this.order;
